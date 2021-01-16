@@ -4,7 +4,11 @@ const superheroeConfig = require("../configs/config").superheroapi;
 
 const getHearoeByName = async (name) => {
   try {
-    const response = await axios.get(superheroeConfig.url + superheroeConfig.APIToken + "/search/" + name);
+    const url = superheroeConfig.url + superheroeConfig.APIToken + "/search/" + name;
+    console.log("Send to url", url);
+    const response = await axios.get(url);
+
+    console.error("axios", response.data);
 
     if (response.data.response !== "success") throw Error("Failed to get superheroe");
 
@@ -12,6 +16,7 @@ const getHearoeByName = async (name) => {
 
     return response.data.results;
   } catch (e) {
+    console.error("axios", e);
     throw Error(e);
   }
 };

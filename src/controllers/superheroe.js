@@ -24,6 +24,7 @@ async function findByName(name) {
 
     return dataToReturn;
   } catch (e) {
+    console.error(e);
     throw Error(e);
   }
 }
