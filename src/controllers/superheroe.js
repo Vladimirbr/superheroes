@@ -20,7 +20,7 @@ async function findByName(name) {
       value.push(name);
     }
 
-    await store.setToStorege("history", value);
+    await store.setToStorege(storeKey, value);
 
     return dataToReturn;
   } catch (e) {
