@@ -1,4 +1,6 @@
 const getHearoeByName = require("../utils/sender").getHearoeByName;
+const store = require("../store/store");
+const storeKey = require("../configs/config").store.key;
 
 async function findByName(name) {
   try {
@@ -9,7 +11,16 @@ async function findByName(name) {
       id: heroes[0].id,
       powerstats: heroes[0].powerstats,
     };
-    //save to store
+
+    value = await store.getFromStore(storeKey);
+
+    if (!value) {
+      value = [name];
+    } else {
+      value.push(name);
+    }
+
+    await store.setToStorege("history", value);
 
     return dataToReturn;
   } catch (e) {
@@ -17,7 +28,14 @@ async function findByName(name) {
   }
 }
 
-async function getPrevSearched() {}
+async function getPrevSearched() {
+  try {
+    value = await store.getFromStore(storeKey);
+    return value;
+  } catch (e) {
+    throw Error(e);
+  }
+}
 
 module.exports.findByName = findByName;
 module.exports.getPrevSearched = getPrevSearched;
